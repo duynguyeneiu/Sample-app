@@ -1,14 +1,3 @@
-<?php
-$sum = null;
-
-$operator1= $_POST['a']??null;
-$operator2= $_POST['b']??null;
-
-if ($operator1!==null && $operator2!== null) {
-    $sum = $operator1+$operator2;
-}
-?>
-
 <!doctype html>
 <html lang="vi">
 
@@ -31,30 +20,41 @@ if ($operator1!==null && $operator2!== null) {
                 <p class="text-secondary small mt-1">
                     Nhập 2 số và bấm Calculate để xem kết quả.
                 </p>
+                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="clearForm()">
+                    Clear
+                </button>
 
-                <form class="mt-4" method="POST">
+                <form class="mt-4" method="POST" action="calculate.php">
 
                     <div class="mb-3">
                         <label class="form-label fw-medium">Số thứ nhất</label>
-                        <input type="number" name="a" required class="form-control form-control-lg rounded-3"
-                            placeholder="VD: 10" />
+                        <input type="number" name="operand1" required
+                            class="operA form-control form-control-lg rounded-3" value=<?= $operand1 ?> />
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-medium">Phép tính</label>
+                        <select name="operator" class="form-select form-select-lg rounded-3">
+                            <option value="+">Cộng (+)</option>
+                            <option value="-">Trừ (-)</option>
+                            <option value="*">Nhân (*)</option>
+                            <option value="/">Chia (÷)</option>
+                        </select>
                     </div>
 
                     <div class="mb-4">
                         <label class="form-label fw-medium">Số thứ hai</label>
-                        <input type="number" name="b" required class="form-control form-control-lg rounded-3"
-                            placeholder="VD: 20" />
+                        <input type="number" name="operand2" required
+                            class="operB form-control form-control-lg rounded-3" value=<?= $operand2 ?> />
                     </div>
 
                     <button type="submit" class="btn btn-dark w-100 py-3 fw-semibold rounded-3">
                         Calculate
                     </button>
-                    <?php
-                    if ($sum!==null) {
-                         echo "Kết quả là: $sum";
-                    }
-                   
-                            ?>
+
+                    <h3>Result:
+                        <?= $result ?? 0 ?>
+                    </h3>
+
 
                 </form>
             </div>
@@ -63,6 +63,15 @@ if ($operator1!==null && $operator2!== null) {
 
     <!-- Bootstrap JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function clearForm() {
+            document.querySelector('form').reset();
+            document.querySelector('.operA').setAttribute('value', "")
+            document.querySelector('.operB').setAttribute('value', "")
+
+            document.querySelector('h3').innerText = 'Result: 0';
+        }
+    </script>
 </body>
 
 </html>
