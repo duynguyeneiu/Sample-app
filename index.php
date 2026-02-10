@@ -24,8 +24,9 @@
                     Clear
                 </button>
 
-                <form class="mt-4" method="POST" action="calculate.php">
 
+                <form class="mt-4" method="POST" action="calculate.php">
+                    <input type="reset">
                     <div class="mb-3">
                         <label class="form-label fw-medium">Số thứ nhất</label>
                         <input type="number" name="operand1" required
