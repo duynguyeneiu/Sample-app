@@ -1,33 +1,44 @@
 <?php
-$result ??= 0;
-
-$operand1 = $_POST['operand1'] ?? null;
-$operand2 = $_POST['operand2'] ?? null;
-$operator = $_POST['operator'] ?? '+';
-
-try {
-    switch ($operator) {
-        case '+':
-            $result = $operand1 + $operand2;
-            break;
-        case '-':
-            $result = $operand1 - $operand2;
-            break;
-        case '*':
-            $result = $operand1 * $operand2;
-            break;
-        case '/':
-            if ($operand2 == 0) {
-                throw new Exception('Cannot devide by 0');
-            }
-            $result = $operand1 / $operand2;
-            break;
-        default:
-            throw new Exception('Invalid operator');
+class Operation
+{
+    public $operand1;
+    public $operand2;
+    public $operator;
+    public $result;
+    public function __construct($operand1, $operand2, $operator)
+    {
+        $this->operand1 = $operand1;
+        $this->operand2 = $operand2;
+        $this->operator = $operator;
+        $this->result = 0;
     }
-} catch (Exception $e) {
-    $result = $e->getMessage();
+    public function calculate()
+    {
+        try {
+            $operand1 = $this->operand1;
+            $operand2 = $this->operand2;
+
+            switch ($this->operator) {
+                case '+':
+                    $this->result = $operand1 + $operand2;
+                    break;
+                case '-':
+                    $this->result = $operand1 - $operand2;
+                    break;
+                case '*':
+                    $this->result = $operand1 * $operand2;
+                    break;
+                case '/':
+                    if ($this->operand2 == 0) {
+                        throw new Exception('Cannot devide by 0');
+                    }
+                    $this->result = $operand1 / $operand2;
+                    break;
+                default:
+                    throw new Exception('Invalid operator');
+            }
+        } catch (Exception $e) {
+            $this->result = $e->getMessage();
+        }
+    }
 }
-
-
-include 'index.php';
